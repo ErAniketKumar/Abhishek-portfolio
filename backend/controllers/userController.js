@@ -1,25 +1,21 @@
 const express = require("express");
 const userModel = require("../models/userModel");
 
-
 const login = async (req, res) => {
 	const { email, password } = req.body;
-
 	try {
 		const user = await userModel.findOne({ email });
 		if (user) {
-			
-			const isPasswordMatch = user.password === password; 
+			const isPasswordMatch = user.password === password;
 			if (isPasswordMatch) {
 				res.cookie("email", email, { httpOnly: true });
 				res.cookie("logedin", true, { httpOnly: true });
-				return res.status(200).json({
-					message: "Login Successful",
-					user: {
-						_id: user._id,
-						name: user.name,
-					},
-				});
+				return res
+					.status(200)
+					.json({
+						message: "Login Successful",
+						user: { _id: user._id, name: user.name },
+					});
 			} else {
 				return res.status(400).json({ message: "Wrong password!" });
 			}
@@ -44,15 +40,16 @@ const signup = async (req, res) => {
 			return res.status(409).json({ message: "User already exists" });
 		} else {
 			if (password === confirmPassword) {
-				
 				const userDetails = new userModel({
 					name,
 					number,
 					email,
-					password, 
+					password,
 				});
 				await userDetails.save();
-				return res.status(201).json({ message: "User registered successfully" });
+				return res
+					.status(201)
+					.json({ message: "User registered successfully" });
 			} else {
 				return res.status(400).json({ message: "Passwords do not match!" });
 			}

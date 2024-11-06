@@ -3,18 +3,20 @@ const app = express();
 const port = process.env.PORT || 4000;
 const dotenv = require("dotenv");
 dotenv.config();
+const cors = require("cors");
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
 const session = require("express-session");
 const connectDB = require("./db/connection");
 const router = require("./routes/routes");
-const cors = require("cors");
 
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
 	session({
-		secret: process.env.EXP_SECRET || "abhisec", 
+		secret: process.env.EXP_SECRET || "abhisec",
 		resave: false,
 		saveUninitialized: true,
 		cookie: {
@@ -23,7 +25,7 @@ app.use(
 	})
 );
 
-connectDB(); 
+connectDB();
 
 app.use("/api", router);
 

@@ -1,43 +1,108 @@
 import React from "react";
-import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
+
 import About from "./components/About";
 import Gallery from "./components/Gallery";
 import Mission from "./components/Mission";
 import Contact from "./components/Contact";
 import Home from "./components/Home";
-import Footer from "./components/Footer";
 import LatestPost from "./components/LatestPost";
-import Promise from "./components/Promise ";
+import Promise from "./components/Promise .jsx";
 import YourSupport from "./components/YourSupport";
 import Donation from "./components/Donation";
+import Dashboard from "./components/Admin/Dashboard";
+import MainLayout from "./MainLayout";
+import AllPost from "./components/Admin/AllPost";
+import ShowMessage from "./components/Admin/ShowMessage";
+import CreatePost from "./components/Admin/CreatePost";
+import Login from "./components/Admin/Login";
+import ProtectedRoute from "./components/Admin/ProtectedRoute"; 
+import { AuthProvider } from "./components/Admin/context/AuthContext"; 
 
 function App() {
 	return (
-		<div>
-			<Navbar></Navbar>
+		<AuthProvider>
 			<Routes>
 				<Route
 					path="/"
 					element={
-						<>
-							<Home></Home>
-							<Promise></Promise>
-							<YourSupport></YourSupport>
-							<LatestPost></LatestPost>
-							<Contact></Contact>
-						</>
+						<MainLayout>
+							<Home />
+							<Promise />
+							<YourSupport />
+							<LatestPost />
+							<Contact />
+						</MainLayout>
 					}
-				></Route>
-				<Route path="/about" element={<About></About>}></Route>
-				<Route path="/gallery" element={<Gallery></Gallery>}></Route>
-				<Route path="/mission" element={<Mission></Mission>}></Route>
-				{/* <Route path="/contact" element={<Contact></Contact>}></Route> */}
-				<Route path="/donate" element={<Donation></Donation>}></Route>
+				/>
+				<Route
+					path="/about"
+					element={
+						<MainLayout>
+							<About />
+						</MainLayout>
+					}
+				/>
+				<Route
+					path="/gallery"
+					element={
+						<MainLayout>
+							<Gallery />
+						</MainLayout>
+					}
+				/>
+				<Route
+					path="/mission"
+					element={
+						<MainLayout>
+							<Mission />
+						</MainLayout>
+					}
+				/>
+				<Route
+					path="/donate"
+					element={
+						<MainLayout>
+							<Donation />
+						</MainLayout>
+					}
+				/>
+				{/* Protecting the Admin routes */}
+				<Route
+					path="/dashboard"
+					element={
+						<ProtectedRoute>
+							<Dashboard />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/allpost"
+					element={
+						<ProtectedRoute>
+							<AllPost />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/showmessage"
+					element={
+						<ProtectedRoute>
+							<ShowMessage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/createpost"
+					element={
+						<ProtectedRoute>
+							<CreatePost />
+						</ProtectedRoute>
+					}
+				/>
+				<Route path="/login" element={<Login />} />
 			</Routes>
-
-			<Footer></Footer>
-		</div>
+		</AuthProvider>
 	);
 }
 

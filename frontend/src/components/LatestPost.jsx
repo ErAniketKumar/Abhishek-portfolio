@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 const LatestPost = () => {
+	const VITE_API_URL = import.meta.env.VITE_API_URL;
+	const [postData, setPostData] = useState("");
+	const fetchPostData = async(api)=>{
+		try{
+			const response = await fetch(api,{
+				method:"POST",
+			});
+			const data = await response.json();
+			if(!response.ok) {
+				toast.error(data.message);
+			} else {
+				setPostData(data);
+				toast.success(data.message);
+			}
+		} catch(error) {
+			toast.error(error.message);
+		}
+	}
 	return (
 		<div className="max-w-screen-2xl container mx-auto md:px-14 mt-16 px-4">
+			<ToastContainer></ToastContainer>
 			<div className="flex flex-col items-center md:gap-6 gap-4 mb-10">
 				<h1 className="md:text-5xl text-3xl font-bold font-sans">
 					Latest Post

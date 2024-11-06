@@ -1,24 +1,47 @@
 const postModel = require("../models/postModel");
+const multer = require("multer");
+const path = require("path");
+const cors = require("cors");
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "public/api/Images");
+	},
+	filename: function (req, file, cb) {
+		cb(
+			null,
+			file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+		);
+	},
+});
+
+const upload = multer({ storage: storage }).single("imageUrl");
 
 const createPost = async (req, res) => {
-	const { author, heading, paragraph, list, imageUrl } = req.body;
-	if (!author || !heading || !imageUrl) {
-		return res.status(400).json({ message: "All inputs are required!" });
-	}
-	try {
-		const postData = new postModel({
-			author,
-			heading,
-			paragraph,
-			list,
-			imageUrl,
-		});
-		await postData.save();
-		return res.status(201).json({ message: "Record saved successfully!" });
-	} catch (error) {
-		console.log(error);
-		return res.status(500).json({ message: "Internal Server Error!" });
-	}
+	upload(req, res, async (err) => {
+		if (err) {
+			return res.status(500).json({ message: "File upload failed" });
+		}
+		const { author, heading, paragraph, list } = req.body;
+		const imageUrl = req.file ? req.file.path : null;
+		if (!author || !heading || !imageUrl) {
+			return res.status(400).json({ message: "All inputs are required!" });
+		}
+		try {
+			const postData = new postModel({
+				author,
+				heading,
+				paragraph,
+				list,
+				imageUrl,
+			});
+			await postData.save();
+			return res.status(201).json({ message: "Record saved successfully!" });
+		} catch (error) {
+			console.log(error);
+			return res.status(500).json({ message: "Internal Server Error!" });
+		}
+	});
 };
 
 const getAllPost = async (req, res) => {
