@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
 
-app.use(cors({ origin: "https://abhisheksarraf.vercel.app/", credentials: true }));
+app.use(cors({ origin: "https://abhisheksarraf.netlify.app/", credentials: true }));
 
 const session = require("express-session");
 const connectDB = require("./db/connection");
