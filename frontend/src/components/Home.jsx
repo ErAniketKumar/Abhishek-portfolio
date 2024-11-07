@@ -128,7 +128,8 @@ const Home = () => {
 											Welcome!
 										</h1>
 										<p className="text-gray-700 text-lg leading-relaxed">
-											I am <span className="font-semibold">Abhishek Sarraf</span>, a
+											I am{" "}
+											<span className="font-semibold">Abhishek Sarraf</span>, a
 											Mukhiya candidate for our gram panchayat, Raj Somgarh. My
 											goal is to improve daily life for everyone in our village
 											by focusing on basic needs like better roads, clean

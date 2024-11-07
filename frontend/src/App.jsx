@@ -18,6 +18,7 @@ import CreatePost from "./components/Admin/CreatePost";
 import Login from "./components/Admin/Login";
 import ProtectedRoute from "./components/Admin/ProtectedRoute"; 
 import { AuthProvider } from "./components/Admin/context/AuthContext"; 
+import ReadMore from "./components/ReadMore.jsx";
 
 function App() {
 	return (
@@ -64,6 +65,14 @@ function App() {
 					element={
 						<MainLayout>
 							<Donation />
+						</MainLayout>
+					}
+				/>
+				<Route
+					path="/readmore/:id"
+					element={
+						<MainLayout>
+							<ReadMore />
 						</MainLayout>
 					}
 				/>

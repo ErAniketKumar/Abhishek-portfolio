@@ -9,6 +9,7 @@ const CreatePost = () => {
 	const [author, setAuthor] = useState("");
 	const [paragraph, setParagraph] = useState("");
 	const [list, setList] = useState("");
+	const [location, setLocation] = useState("");
 	const [imageFile, setImageFile] = useState(null);
 	const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ const CreatePost = () => {
 		createPostData.append("heading", heading);
 		createPostData.append("paragraph", paragraph);
 		createPostData.append("list", list);
+		createPostData.append("location", location);
 		createPostData.append("imageUrl", imageFile); 
 
 		const response = await fetch(`${VITE_API_URL}/post`, {
@@ -107,6 +109,17 @@ const CreatePost = () => {
 							name="imageUrl"
 							id="imageUrl"
 							onChange={(e) => setImageFile(e.target.files[0])}
+						/>
+					</div>
+					<div className="flex flex-col">
+						<label htmlFor="location">=Enter Location</label>
+						<input
+							className="border border-gray-900 p-2"
+							type="text"
+							name="location"
+							id="location"
+							value={location}
+							onChange={(e) => setLocation(e.target.value)}
 						/>
 					</div>
 

@@ -20,10 +20,11 @@ const upload = multer({ storage: storage }).single("imageUrl");
 const createPost = async (req, res) => {
 	upload(req, res, async (err) => {
 		if (err) {
+			console.log("Error in file upload", err);
 			return res.status(500).json({ message: "File upload failed" });
 		}
-		const { author, heading, paragraph, list } = req.body;
-		const imageUrl = req.file ? req.file.path : null;
+		const { author, heading, paragraph, list, location } = req.body;
+		const imageUrl = req.file ? `/Images/${req.file.filename}` : null;
 		if (!author || !heading || !imageUrl) {
 			return res.status(400).json({ message: "All inputs are required!" });
 		}
@@ -34,6 +35,7 @@ const createPost = async (req, res) => {
 				paragraph,
 				list,
 				imageUrl,
+				location,
 			});
 			await postData.save();
 			return res.status(201).json({ message: "Record saved successfully!" });
@@ -108,10 +110,28 @@ const getSinglePost = async (req, res) => {
 	}
 };
 
+const LatestThreePost = async (req, res) => {
+	try {
+		const latestThreeItems = await postModel
+			.find({})
+			.sort({ createdAt: -1 })
+			.limit(3);
+		if (latestThreeItems) {
+			return res.status(200).json(latestThreeItems);
+		} else {
+			return res.status(404).json({ message: "No record found" });
+		}
+	} catch (error) {
+		console.error("show last 3 post error:", error);
+		return res.status(500).json({ message: "Internal server error" });
+	}
+};
+
 module.exports = {
 	createPost,
 	getAllPost,
 	getSinglePost,
 	updatePost,
 	deletePost,
+	LatestThreePost,
 };
