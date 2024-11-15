@@ -81,25 +81,25 @@ function App() {
 				<Route
 					path="/dashboard"
 					element={
-						<ProtectedRoute>
+						// <ProtectedRoute>
 							<Dashboard />
-						</ProtectedRoute>
+						// </ProtectedRoute>
 					}
 				/>
 				<Route
 					path="/allpost"
 					element={
-						<ProtectedRoute>
+						// <ProtectedRoute>
 							<AllPost />
-						</ProtectedRoute>
+						// </ProtectedRoute>
 					}
 				/>
 				<Route
 					path="/showmessage"
 					element={
-						<ProtectedRoute>
+						// <ProtectedRoute>
 							<ShowMessage />
-						</ProtectedRoute>
+						// </ProtectedRoute>
 					}
 				/>
 				<Route
