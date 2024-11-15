@@ -51,7 +51,7 @@ const Navbar = () => {
 				>
 					<Link
 						to="/donate"
-						className="block border rounded-full p-2 hover:bg-[#f5c922] hover:text-red-500 py-2 md:py-0 "
+						className="block md:border md:rounded-full md:hover:bg-[#f5c922] hover:text-red-500 mt-3 md:mt-0"
 					>
 						DONATE NOW
 					</Link>
@@ -76,6 +76,14 @@ const Navbar = () => {
 					>
 						CONTACT US
 					</a>
+
+					<Link
+						to="/dashboard"
+						className="block py-2 md:py-0 hover:text-gray-200"
+					>
+						LOGIN
+					</Link>
+					
 				</div>
 			</nav>
 			<marquee className="text-green-400 font-bold" behavior="" direction="">
