@@ -76,30 +76,40 @@ function App() {
 						</MainLayout>
 					}
 				/>
-				
-				{/* this is protected route  */}
+
+					{/* extra added for testing */}
+					<Route
+					path="/dashboard"
+					element={
+						<MainLayout>
+							<Dashboard />
+						</MainLayout>
+					}
+				/>
+
+				{/* Protecting the Admin routes */}
 				<Route
 					path="/dashboard"
 					element={
-						// <ProtectedRoute>
+						<ProtectedRoute>
 							<Dashboard />
-						// </ProtectedRoute>
+						</ProtectedRoute>
 					}
 				/>
 				<Route
 					path="/allpost"
 					element={
-						// <ProtectedRoute>
+						<ProtectedRoute>
 							<AllPost />
-						// </ProtectedRoute>
+						</ProtectedRoute>
 					}
 				/>
 				<Route
 					path="/showmessage"
 					element={
-						// <ProtectedRoute>
+						<ProtectedRoute>
 							<ShowMessage />
-						// </ProtectedRoute>
+						</ProtectedRoute>
 					}
 				/>
 				<Route
