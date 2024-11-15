@@ -76,17 +76,7 @@ function App() {
 						</MainLayout>
 					}
 				/>
-
-					{/* extra added for testing */}
-					<Route
-					path="/dashboard"
-					element={
-						<MainLayout>
-							<Dashboard />
-						</MainLayout>
-					}
-				/>
-
+				
 				{/* Protecting the Admin routes */}
 				<Route
 					path="/dashboard"
