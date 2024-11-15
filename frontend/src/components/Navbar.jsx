@@ -70,12 +70,12 @@ const Navbar = () => {
 					>
 						GALLERY
 					</Link>
-					<Link
-						to="#contact"
+					<a
+						href="#contact"
 						className="block py-2 md:py-0 hover:text-gray-200"
 					>
 						CONTACT US
-					</Link>
+					</a>
 				</div>
 			</nav>
 			<marquee className="text-green-400 font-bold" behavior="" direction="">

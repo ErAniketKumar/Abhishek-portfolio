@@ -46,7 +46,7 @@ const Contact = () => {
 	};
 
 	return (
-		<div className="w-full">
+		<div id="contact" className="w-full">
 			<div className=" contact-container">
 				<ToastContainer></ToastContainer>
 				<div className="max-w-screen-2xl mx-auto md:px-14 mt-[5.6rem] px-4">
