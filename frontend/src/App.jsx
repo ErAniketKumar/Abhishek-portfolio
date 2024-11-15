@@ -76,7 +76,8 @@ function App() {
 						</MainLayout>
 					}
 				/>
-				{/* Protecting the Admin routes */}
+				
+				{/* this is protected route  */}
 				<Route
 					path="/dashboard"
 					element={
