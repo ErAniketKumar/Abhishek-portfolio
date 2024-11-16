@@ -44,7 +44,7 @@ app.use("/api", router);
 
 app.options('/api/login', (req, res) => {
 	res.setHeader('Access-Control-Allow-Origin', 'https://abhisheksarraf.in');
-	res.setHeader('Access-Control-Allow-Methods', 'POST, GET,PATCH, DELETE, OPTIONS');
+	res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 	res.setHeader('Access-Control-Allow-Credentials', 'true');
 	res.status(200).end();
