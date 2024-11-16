@@ -27,7 +27,7 @@ const CreatePost = () => {
 		const response = await fetch(`${VITE_API_URL}/post`, {
 			method: "POST",
 			body: createPostData,
-			credentials: "include",
+			
 		});
 		const data = await response.json();
 		if (!response.ok) {
