@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 const CreatePost = () => {
-	const VITE_API_URL = import.meta.env.VITE_API_URL;
+	const VITE_API_URL = import.meta.env.VITE_API_URL; // Ensure this environment variable is correctly configured
 	const [heading, setHeading] = useState("");
 	const [author, setAuthor] = useState("");
 	const [paragraph, setParagraph] = useState("");
@@ -15,33 +14,45 @@ const CreatePost = () => {
 
 	const handleLostItemForm = async (e) => {
 		e.preventDefault();
-		const createPostData = new FormData();
 
+		// Create FormData object for sending the data
+		const createPostData = new FormData();
 		createPostData.append("author", author);
 		createPostData.append("heading", heading);
 		createPostData.append("paragraph", paragraph);
 		createPostData.append("list", list);
 		createPostData.append("location", location);
-		createPostData.append("imageUrl", imageFile); 
+		createPostData.append("imageUrl", imageFile); // Ensure the backend is set to handle this correctly
 
-		const response = await fetch(`${VITE_API_URL}/post`, {
-			method: "POST",
-			body: createPostData,
-			
-		});
-		const data = await response.json();
-		if (!response.ok) {
-			toast.error(data.message);
-		} else {
-			toast.success(data.message);
-			navigate("/allpost");
+		try {
+			const response = await fetch(`${VITE_API_URL}/post`, {
+				method: "POST",
+				body: createPostData,
+			});
+			const data = await response.json();
+
+			console.log("Data received from create post API:", data);
+
+			if (!response.ok) {
+				// Show error message
+				toast.error(data.message || "Error creating post.");
+			} else {
+				// Show success message and navigate
+				toast.success(data.message || "Post created successfully.");
+				navigate("/allpost");
+			}
+		} catch (error) {
+			// Catch any network or server errors
+			console.error("Error in creating post:", error);
+			toast.error("Something went wrong! Please try again.");
 		}
 	};
+
 	return (
 		<div className="max-w-screen-2xl container mx-auto md:px-14 px-4">
 			<ToastContainer />
 			<h1 className="text-2xl text-slate-500 font-medium p-2 flex justify-center">
-				Post Blogs/Gallery information
+				Post Blogs/Gallery Information
 			</h1>
 			<div className="flex justify-center border-2 p-2">
 				<form
@@ -51,6 +62,7 @@ const CreatePost = () => {
 					encType="multipart/form-data"
 					onSubmit={handleLostItemForm}
 				>
+					{/* Author Input */}
 					<div className="flex flex-col">
 						<label htmlFor="author">Author Name</label>
 						<input
@@ -62,10 +74,10 @@ const CreatePost = () => {
 							onChange={(e) => setAuthor(e.target.value)}
 						/>
 					</div>
+
+					{/* Heading Input */}
 					<div className="flex flex-col">
-						<label htmlFor="heading">
-							Please enter the heading/title of post.
-						</label>
+						<label htmlFor="heading">Please enter the heading/title of the post</label>
 						<input
 							className="border border-gray-900 p-2"
 							type="text"
@@ -76,6 +88,7 @@ const CreatePost = () => {
 						/>
 					</div>
 
+					{/* Paragraph Input */}
 					<div className="flex flex-col">
 						<label htmlFor="paragraph">Paragraph</label>
 						<input
@@ -88,6 +101,7 @@ const CreatePost = () => {
 						/>
 					</div>
 
+					{/* List Input */}
 					<div className="flex flex-col">
 						<label htmlFor="list">Lists</label>
 						<input
@@ -100,6 +114,7 @@ const CreatePost = () => {
 						/>
 					</div>
 
+					{/* Image File Input */}
 					<div className="flex flex-col">
 						<label htmlFor="image">Upload Image</label>
 						<input
@@ -111,8 +126,10 @@ const CreatePost = () => {
 							onChange={(e) => setImageFile(e.target.files[0])}
 						/>
 					</div>
+
+					{/* Location Input */}
 					<div className="flex flex-col">
-						<label htmlFor="location">=Enter Location</label>
+						<label htmlFor="location">Enter Location</label>
 						<input
 							className="border border-gray-900 p-2"
 							type="text"
@@ -123,7 +140,11 @@ const CreatePost = () => {
 						/>
 					</div>
 
-					<button className="bg-slate-500 text-white hover:bg-gray-700  px-2 py-2">
+					{/* Submit Button */}
+					<button
+						type="submit"
+						className="bg-slate-500 text-white hover:bg-gray-700 px-2 py-2"
+					>
 						Submit
 					</button>
 				</form>

@@ -3,29 +3,32 @@ const mongoose = require("mongoose");
 const postSchema = mongoose.Schema(
 	{
 		author: {
-			type: String,
+			type: String, // Name or identifier of the post's author
 		},
 		heading: {
-			type: String,
-			required: true,
+			type: String, // Title or heading of the post
+			required: true, // This field must be provided when creating a post
 		},
 		paragraph: {
-			type: String,
+			type: String, // Body content of the post
 		},
 		list: {
-			type: String, 
+			type: String, // List (possibly a serialized string like JSON or comma-separated values)
 		},
 		imageUrl: {
 			type: String,
 			required: true,
+			match: /^\/?(\w+\/?)+(\.\w+)?$/, // Example: Simple regex for paths (improve if needed)
 		},
-		location:{
-			type:String,
+		
+		location: {
+			type: String, // Location information associated with the post
 		},
 	},
-	{ timestamps: true }
+	{ timestamps: true } // Automatically adds `createdAt` and `updatedAt` fields
 );
 
+// Create a model for the schema
 const postModel = mongoose.model("Posts", postSchema);
 
-module.exports = postModel;
+module.exports = postModel; // Export the model for use in other parts of the app
