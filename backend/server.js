@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
 
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(cors());
 
 const session = require("express-session");
 const connectDB = require("./db/connection");
