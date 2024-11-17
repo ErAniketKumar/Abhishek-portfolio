@@ -6,11 +6,10 @@ import Slider from "react-slick";
 import { Link, NavLink } from "react-router-dom";
 import {
 	FaInstagram,
-	FaGithub,
-	FaReact,
-	FaNodeJs,
+	FaFacebook,
 	FaLinkedin,
 } from "react-icons/fa";
+
 import { FaSquareXTwitter } from "react-icons/fa6";
 
 const Home = () => {
@@ -27,8 +26,8 @@ const Home = () => {
 	const mediaIcon = [
 		{
 			id: 1,
-			url: "https://github.com/ErAniketKumar",
-			icon: <FaGithub />,
+			url: "https://www.facebook.com/samajseviabhisheksarraf/",
+			icon: <FaFacebook />,
 		},
 		{
 			id: 2,
@@ -37,12 +36,12 @@ const Home = () => {
 		},
 		{
 			id: 3,
-			url: "https://instagram.com/eraniket95",
+			url: "https://instagram.com/abhi_shekshroff",
 			icon: <FaInstagram />,
 		},
 		{
 			id: 4,
-			url: "https://x.com/eraniket95/",
+			url: "https://x.com/Abhishe28618148/",
 			icon: <FaSquareXTwitter />,
 		},
 	];

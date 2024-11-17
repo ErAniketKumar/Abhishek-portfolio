@@ -2,18 +2,17 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
 	FaInstagram,
-	FaGithub,
-	FaReact,
-	FaNodeJs,
+	FaFacebook,
 	FaLinkedin,
 } from "react-icons/fa";
+
 import { FaSquareXTwitter } from "react-icons/fa6";
 const Footer = () => {
 	const mediaIcon = [
 		{
 			id: 1,
-			url: "https://github.com/ErAniketKumar",
-			icon: <FaGithub />,
+			url: "https://www.facebook.com/samajseviabhisheksarraf/",
+			icon: <FaFacebook />,
 		},
 		{
 			id: 2,
@@ -22,12 +21,12 @@ const Footer = () => {
 		},
 		{
 			id: 3,
-			url: "https://instagram.com/eraniket95",
+			url: "https://instagram.com/abhi_shekshroff",
 			icon: <FaInstagram />,
 		},
 		{
 			id: 4,
-			url: "https://x.com/eraniket95/",
+			url: "https://x.com/Abhishe28618148/",
 			icon: <FaSquareXTwitter />,
 		},
 	];
@@ -38,7 +37,7 @@ const Footer = () => {
 					<div>
 						<h1 className="text-xl font-bold">CONTACT US</h1>
 						<p>+91 9572740290</p>
-						<p>samajseviabhishek@gmail.com</p>
+						<p>contactabhisheksarraf@gmail.com</p>
 					</div>
 					<div>
 						<h1 className="text-xl font-bold">ADDRESS</h1>
@@ -59,7 +58,7 @@ const Footer = () => {
 						</div>
 
 						<div>
-							<p className="text-xl font-bold">View my portfolio</p>
+							<p className="text-xl font-bold">View Developer Portfolio</p>
 							<Link to="https://eraniket.netlify.app" target="_blank">
 								https://eraniket.netlify.app
 							</Link>
