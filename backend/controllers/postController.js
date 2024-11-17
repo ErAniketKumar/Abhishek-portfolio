@@ -1,66 +1,64 @@
 const postModel = require("../models/postModel");
 const multer = require("multer");
-const path = require("path");
-const cors = require("cors");
-
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
+const path = require("path");
 
-cloudinary.config({ 
-	cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-	api_key: process.env.CLOUDINARY_API_KEY, 
-	api_secret: process.env.CLOUDINARY_API_SECRET
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, "public/api/Images");
-	},
-	filename: function (req, file, cb) {
-		cb(
-			null,
-			file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-		);
-	},
+// Configure Cloudinary storage for multer
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "api/Images",
+    format: async (req, file) => path.extname(file.originalname).slice(1), // supports promises as well
+    public_id: (req, file) => file.fieldname + "_" + Date.now(),
+  },
 });
 
 const upload = multer({ storage: storage }).single("imageUrl");
 
 const createPost = async (req, res) => {
-	upload(req, res, async (err) => {
-	  if (err) {
-		console.log("Error in file upload", err);
-		return res.status(500).json({ message: "File upload failed" });
-	  }
-  
-	  const { author, heading, paragraph, list, location } = req.body;
-  
-	  if (!author || !heading || !req.file) {
-		return res.status(400).json({ message: "All inputs are required!" });
-	  }
-  
-	  try {
-		const uploadResult = await cloudinary.uploader.upload(req.file.path);
-		console.log(uploadResult);
-  
-		const imageUrl = uploadResult.secure_url;
-  
-		const postData = new postModel({
-		  author,
-		  heading,
-		  paragraph,
-		  list,
-		  imageUrl,
-		  location,
-		});
-  
-		await postData.save();
-		return res.status(201).json({ message: "Record saved successfully!" });
-	  } catch (error) {
-		console.log(error);
-		return res.status(500).json({ message: "Internal Server Error!" });
-	  }
-	});
-  };
+  upload(req, res, async (err) => {
+    if (err) {
+      console.log("Error in file upload", err);
+      return res.status(500).json({ message: "File upload failed" });
+    }
+
+    const { author, heading, paragraph, list, location } = req.body;
+
+    if (!author || !heading || !req.file) {
+      return res.status(400).json({ message: "All inputs are required!" });
+    }
+
+    try {
+      const uploadResult = await cloudinary.uploader.upload(req.file.path);
+      console.log(uploadResult);
+
+      const imageUrl = uploadResult.secure_url;
+
+      const postData = new postModel({
+        author,
+        heading,
+        paragraph,
+        list,
+        imageUrl,
+        location,
+      });
+
+      await postData.save();
+      return res.status(201).json({ message: "Record saved successfully!" });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Internal Server Error!" });
+    }
+  });
+};
 
 const getAllPost = async (req, res) => {
 	try {

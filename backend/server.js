@@ -1,65 +1,44 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 4000;
-const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
-
-// app.use(
-// 	cors({
-// 	  origin: 'https://abhisheksarraf.in', // Allow requests from this origin
-// 	  methods: 'GET, POST', // Specify allowed methods
-// 	  credentials: true,    // Allow cookies and other credentials
-// 	})
-//   );
-
-app.use(cors());
-
-
-
-
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const connectDB = require("./db/connection");
 const router = require("./routes/routes");
 
+// CORS configuration
+app.use(cors());
+
+// Middleware to parse JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api/Images', express.static(path.join(__dirname, 'public/api/Images')));
 
+// Session configuration
 app.use(
-	session({
-		secret: process.env.EXP_SECRET || "abhisec",
-		resave: false,
-		saveUninitialized: true,
-		cookie: {
-			maxAge: 1000 * 60 * 60 * 24,
-		},
-	})
+    session({
+        secret: process.env.EXP_SECRET || "abhisec", 
+        resave: false,
+        saveUninitialized: true,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGO_URI, // Your MongoDB connection string
+            collectionName: 'sessions'
+        }),
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24, // 1 day
+        },
+    })
 );
 
-connectDB();
+// Connect to the database
+connectDB(); 
 
+// Routes
 app.use("/api", router);
 
-
-app.options('/api/login', (req, res) => {
-	res.setHeader('Access-Control-Allow-Origin', 'https://abhisheksarraf.in');
-	res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-	res.setHeader('Access-Control-Allow-Credentials', 'true');
-	res.status(200).end();
-  });
-  
-
-// for not found url / routes
-
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
+// Start the server
 app.listen(port, () => {
-	console.log(`Server is running at port: ${port}`);
+    console.log(`Server is running at port: ${port}`);
 });
