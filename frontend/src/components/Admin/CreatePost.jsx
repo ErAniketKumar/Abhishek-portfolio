@@ -15,28 +15,47 @@ const CreatePost = () => {
 
 	const handleLostItemForm = async (e) => {
 		e.preventDefault();
-		const createPostData = new FormData();
+		// const createPostData = new FormData();
+	
+		// createPostData.append("author", author);
+		// createPostData.append("heading", heading);
+		// createPostData.append("paragraph", paragraph);
+		// createPostData.append("list", list);
+		// createPostData.append("location", location);
 
-		createPostData.append("author", author);
-		createPostData.append("heading", heading);
-		createPostData.append("paragraph", paragraph);
-		createPostData.append("list", list);
-		createPostData.append("location", location);
-		createPostData.append("imageUrl", imageFile); 
 
-		const response = await fetch(`${VITE_API_URL}/post`, {
-			method: "POST",
-			body: createPostData,
-			
-		});
-		const data = await response.json();
-		if (!response.ok) {
-			toast.error(data.message);
-		} else {
-			toast.success(data.message);
-			navigate("/allpost");
+		const createPostData = {
+			author,
+			heading,
+			paragraph,
+			list,
+			location
 		}
+
+		const fileReader = new FileReader();
+		fileReader.readAsDataURL(imageFile);
+		fileReader.onload = async () => {
+			console.log(fileReader.result);
+			createPostData.imageFile = fileReader.result;
+			const response = await fetch(`${VITE_API_URL}/post`, {
+				method: "POST",
+				headers:{
+					"Content-Type":"application/json",
+				},
+				body: JSON.stringify(createPostData),
+			});
+		
+			const data = await response.json();
+			if (!response.ok) {
+				toast.error(data.message);
+			} else {
+				toast.success(data.message);
+				navigate("/allpost");
+			}
+		}
+		
 	};
+	
 	return (
 		<div className="max-w-screen-2xl container mx-auto md:px-14 px-4">
 			<ToastContainer />

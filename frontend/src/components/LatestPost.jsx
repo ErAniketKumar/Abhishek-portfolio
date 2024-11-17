@@ -41,7 +41,7 @@ const LatestPost = () => {
 						<div key={post._id} className="flex flex-col gap-2 p-2 w-full">
 							<div className="h-56 overflow-hidden">
 								<img
-									src={`${VITE_API_URL}${post.imageUrl}`}
+									src={post.imageUrl}
 									className="w-full h-full sm:object-fit object-center"
 									alt=""
 								/>

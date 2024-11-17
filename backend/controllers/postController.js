@@ -1,6 +1,4 @@
 const postModel = require("../models/postModel");
-const multer = require("multer");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
 const path = require("path");
 
@@ -11,33 +9,17 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Configure Cloudinary storage for multer
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "api/Images",
-    format: async (req, file) => path.extname(file.originalname).slice(1), // supports promises as well
-    public_id: (req, file) => file.fieldname + "_" + Date.now(),
-  },
-});
-
-const upload = multer({ storage: storage }).single("imageUrl");
-
 const createPost = async (req, res) => {
-  upload(req, res, async (err) => {
-    if (err) {
-      console.log("Error in file upload", err);
-      return res.status(500).json({ message: "File upload failed" });
-    }
+	const { author, heading, paragraph, list, location, imageFile } = req.body;
 
-    const { author, heading, paragraph, list, location } = req.body;
+	console.log(req.body);
 
-    if (!author || !heading || !req.file) {
+    if (!author || !heading) {
       return res.status(400).json({ message: "All inputs are required!" });
     }
 
     try {
-      const uploadResult = await cloudinary.uploader.upload(req.file.path);
+      const uploadResult = await cloudinary.uploader.upload(imageFile);
       console.log(uploadResult);
 
       const imageUrl = uploadResult.secure_url;
@@ -57,7 +39,6 @@ const createPost = async (req, res) => {
       console.log(error);
       return res.status(500).json({ message: "Internal Server Error!" });
     }
-  });
 };
 
 const getAllPost = async (req, res) => {

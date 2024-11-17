@@ -51,7 +51,7 @@ const Gallery = () => {
 								>
 									<div className="h-44 overflow-hidden">
 										<img
-											src={`${VITE_API_URL}${post.imageUrl}`}
+											src={post.imageUrl}
 											className="w-full h-full sm:object-fit object-center"
 											alt=""
 										/>

@@ -18,7 +18,6 @@ const postSchema = mongoose.Schema(
 		imageUrl: {
 			type: String,
 			required: true,
-			match: /^\/?(\w+\/?)+(\.\w+)?$/, // Example: Simple regex for paths (improve if needed)
 		},
 		
 		location: {
