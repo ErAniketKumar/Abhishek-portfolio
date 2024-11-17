@@ -32,7 +32,7 @@ const ReadMore = () => {
 		<div className="max-w-screen-2xl container mx-auto md:px-14 mt-16 px-4">
 			<div className="flex flex-col">
 				<div>
-					<img src={`${VITE_API_URL}${singlePost.imageUrl}`} alt="" />
+					<img src={singlePost.imageUrl} alt="" />
 				</div>
 				<div className="space-y-2 mt-2">
 					<div className="text-lg font-medium">

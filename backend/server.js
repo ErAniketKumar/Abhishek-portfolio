@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 
 // app.use(
