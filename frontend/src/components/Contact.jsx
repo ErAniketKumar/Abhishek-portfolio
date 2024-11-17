@@ -19,7 +19,7 @@ const Contact = () => {
 				message,
 			};
 
-			console.log("message data", messageData);
+		
 			const response = await fetch(`${VITE_API_URL}/message`, {
 				method: "POST",
 				headers: {

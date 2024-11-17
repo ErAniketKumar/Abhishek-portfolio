@@ -33,10 +33,10 @@ const Login = () => {
 				navigate("/dashboard");
 			}
 		} catch (error) {
-			console.log("Error found",error)
+		
 			toast.error("An error occurred during login.");
 			if (process.env.NODE_ENV === "development") {
-				console.error("Error:", error.message || error);
+				// console.error("Error:", error.message || error);
 			}
 		}
 	};

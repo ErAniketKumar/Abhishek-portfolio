@@ -26,12 +26,12 @@ const ShowMessage = () => {
 	};
 
 	const handleDeleteMessage = async (id) => {
-		console.log("id in frnt del msg", id);
+		
 		try {
 			const response = await fetch(`${VITE_API_URL}/message/${id}`, {
 				method: "DELETE",
 			});
-			console.log("response is del message", response);
+			
 			const deletedMessage = await response.json();
 			if (!response.ok) {
 				toast.error(deletedMessage.message);

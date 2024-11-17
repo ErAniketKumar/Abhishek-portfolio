@@ -35,7 +35,7 @@ const CreatePost = () => {
 		const fileReader = new FileReader();
 		fileReader.readAsDataURL(imageFile);
 		fileReader.onload = async () => {
-			console.log(fileReader.result);
+			
 			createPostData.imageFile = fileReader.result;
 			const response = await fetch(`${VITE_API_URL}/post`, {
 				method: "POST",
